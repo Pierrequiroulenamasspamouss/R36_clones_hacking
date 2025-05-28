@@ -6,9 +6,9 @@ Because I like to tinker, and thanks to the post of u/Careful-Ad3182 and u/Ill-I
 
 WARNING : this is not a tutorial for beginners. it is a proof of concept that having a ssh connection to your machine via OTG is possible.
 
-** I need someone to help me run the script directly via the homescreen , or with an easy modifications tool. (adding a new system called homebrews is possible, to bypass the need for uart and just use ueat once.
+** I need someone to help me run the script directly via the homescreen , or with an easy modifications tool. (adding a new system called homebrews is possible, to bypass the need for UART and just use the serial via UART once.
 
-a script to modify the file /storage/.emulationstation/es_systems.cfg and add the followinf lines inbetween the other systems : 
+What I need is a script to modify the file /storage/.emulationstation/es_systems.cfg and add the following lines inbetween the other systems : 
 ```
   <system>
     <name>homebrews</name>
@@ -37,10 +37,10 @@ Download the latest release and unzip it to the root of your SD card. There shou
 # Open your console
 Remove the six screws on the back of your console and remove the back shell. Then, disconnect the battery. All the clones that have a builtin storage have this feature : exposed and working UART pads. Their position can vary a lot, but they are often either near the CPU or near the SD card. Do not use the 4 pads connections, those are just for a custom install on an SD card ( like if you put the OS on the sd card instead of the builtin flash ) 
 example of the pins just down below :
-![1](placeholder.jpg)
-![2](placeholder.jpg)
-![3](placeholder.jpg)
-![4](placeholder.jpg)
+![1](https://github.com/Pierrequiroulenamasspamouss/R36_clones_hacking/blob/main/Capture%20d%E2%80%99%C3%A9cran%202025-05-28%20065427.png)
+![2](https://github.com/Pierrequiroulenamasspamouss/R36_clones_hacking/blob/main/Capture%20d%E2%80%99%C3%A9cran%202025-05-28%20065449.png)
+![3](https://github.com/Pierrequiroulenamasspamouss/R36_clones_hacking/blob/main/Capture%20d%E2%80%99%C3%A9cran%202025-05-28%20065605.png)
+![4](https://github.com/Pierrequiroulenamasspamouss/R36_clones_hacking/blob/main/Capture%20d%E2%80%99%C3%A9cran%202025-05-28%20065710.png)
 
 # Setup the mod
 connect the corresponding pins from your UART to USB adapter TX and RX to RX and TX of the board (this is inverted) like such : 
