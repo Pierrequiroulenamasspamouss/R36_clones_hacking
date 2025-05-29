@@ -1,4 +1,4 @@
-# R36_clones_hacking
+# R36 clone SSH connection via USB
 A guide on how to make your R36 clone connect via ssh through USB
 
 You bought an R36 clone and you don't know what to do with it ? Don't worry, I was in the same situation than you a few days ago. 
@@ -6,78 +6,26 @@ Because I like to tinker, and thanks to the post of u/Careful-Ad3182 and u/Ill-I
 
 WARNING : this is not a tutorial for beginners. it is a proof of concept that having a ssh connection to your machine via OTG is possible.
 
- # UPDATE : 
- I got a way to run the server from the homescreen, by putting my script into a newly created ports_scripts directory. Somehow the machine has all we need. Gonna update the tutorial to not require UART, now that this is possible. And also try to change the system files to use another game launcher like ArkOS Just put the files insite the tools folder from the zip file into a newly created "ports_scripts"  folder in your SD card and launch the script via the Ports selection. 
-
 
 # Prerequisites
-- UART to USB interface. Any controller that can go up to 1 500 000 BAUD can do the job. I repurposed an old ESP32 from which I removed the chip and kept the interfacing chip ![like this one](https://www.waveshare.com/media/catalog/product/c/p/cp2102-usb-uart-board-type-a-1_1.jpg)
 - An R36S (pro, but R36S should be the same, probably works for K36s and R36 MAX too with some adjustments ? )
 - USB-OTG compatibe cables
-- some wires to connect RX, TX and GND to the UART-USB interface
-- working [PuTTy ](https://www.putty.org/)  
+- A computer running Windows/Linux
 
 # Setup the SD card : 
-Download the latest release and unzip it to the root of your SD card. There should be no overwrites. Put the sd back in the console
+Download the latest release (for now EZ-installer.zip) and unzip it to the root of your SD card. There should be no overwrites. Put the sd back in the console
 
-# Open your console
-Remove the six screws on the back of your console and remove the back shell. Then, disconnect the battery. All the clones that have a builtin storage have this feature : exposed and working UART pads. Their position can vary a lot, but they are often either near the CPU or near the SD card. Do not use the 4 pads connections, those are just for a custom install on an SD card ( like if you put the OS on the sd card instead of the builtin flash ) 
-example of the pins just down below :
-![1](https://github.com/Pierrequiroulenamasspamouss/R36_clones_hacking/blob/main/Capture%20d%E2%80%99%C3%A9cran%202025-05-28%20065427.png)
-![2](https://github.com/Pierrequiroulenamasspamouss/R36_clones_hacking/blob/main/Capture%20d%E2%80%99%C3%A9cran%202025-05-28%20065449.png)
-![3](https://github.com/Pierrequiroulenamasspamouss/R36_clones_hacking/blob/main/Capture%20d%E2%80%99%C3%A9cran%202025-05-28%20065605.png)
-![4](https://github.com/Pierrequiroulenamasspamouss/R36_clones_hacking/blob/main/Capture%20d%E2%80%99%C3%A9cran%202025-05-28%20065710.png)
+# Launch the script
+Open the "Ports" system. if there's nothing accessible there, go to the EmuElec settings and check the "see empty systems". That would be strange but not impossible. If you still see not script, there's a problem. If you do see the program, run it. you should be greeted with a black screen. Now you can connect the device to your computer with an USB cable, and you should hear the sound that a device has been connected. Note that it is registered as a "Network adapter" and not a usb device. 
 
-# Setup the mod
-connect the corresponding pins from your UART to USB adapter TX and RX to RX and TX of the board (this is inverted) like such : 
-![image](https://github.com/user-attachments/assets/4ff4f2b5-4fa9-4179-ba17-49f4fb70d99e)
-
-This UART process's only reason to exist is because you need to run a bash script to launch the ssh server. I will maybe later try to make a script to automate the launch at startup, but I'm not sure it would be a good idea, since the OTG is used as a host mainly without that. That's why I would suggest to expose those pins to the outside of the shell in order to easily reconnect the uart to usb interfaceif you have to reboot the system. 
-Open PuTTy and int the "connection type" use "Serial". Set the speed to 1500000 ( "15" and five zeroes ) and instead of COM1, set the serial line to the COM of your device ( mine was COM9, and you should know that COM 1/2 are often used internally ). You should have your console connected to your computer via UART by now. If it's the wrong COM, use the Device manager to discover where your device is. If the configuration works, you can give it a name (e.g. "R36" ) and click on "Save" before clicking on "Open" to open the connection.   
-
-
-# Running the script
-Once you boot the console, you have first the logging of the device, and then, you will be greeted with a shell :
-```shell
-[   35.227069] (sd-umount)[1617]: Failed to unmount /flash: Device or resource busy
-[   35.237675] systemd-shutdown[1]: Failed to finalize file systems, loop devices, ignoring.
-[   35.319002] reboot: Restarting system with command 'now'
-DDR V2.08 20220817
-In
-SRX
-LP3,1024MB,333MHz
-bw      col     bk      row     cs      dbw
-32      10      8       14      2       32
-cs1 row:14
-OUT
-Boot1 Release Time: Jan 17 2022 10:48:40, version: 1.35
-ROM VER:0x56313030, 18
-hamming_distance:3326 3330 3
-chip_id:524b3326_0,0
-ChipType = 0x12, 778
-No.1 FLASH ID:1 ff ff ff ff ff
-mmc2:cmd19,100
-
-
-(...)
-[    3.557073] rockchip-dmc dmc: failed to get vop bandwidth to dmc rate
-[    3.557156] rockchip-dmc dmc: failed to get vop pn to msch rl
-[    3.586562] devfreq dmc: Couldn't update frequency transition information.
-RuiSuo:~ #
-```
-You now have access to the machine as a root user ( no need for sudo ) 
-
-you can now run de command 
-`./roms/tools/ssh_over_usb/ethernet_over_usb.sh `
-
-This will launch a dropbear ssh server as well as a custom usb-otg script that puts the console into a listening state instead of a "USB host" state.
-No need for binaries, they are included in the package (this is not my binary, nor my code, I made chatGPT rewrite my code because it was too bad)
-
-Now, if you connect your device via OTG to your computer, you should hear the sound of a peripheral connected to the computer. You can now use the command for windows
 ```cmd
 netsh interface ip set address "Ethernet 2" static 192.168.7.2 255.255.255.0
 ```
+
+
 and then try to ping it
+(The script takes ~5-10s to load, so be a little patient before trying to ping the device.)
+
 ```cmd
 ping 192.168.7.2
 ```
@@ -133,10 +81,11 @@ On first boot, it might ask to generate keys. follow the instrucions on the term
   The fingerprint for the ED25519 key sent by the remote host is
   SHA256:CEQJa/t5qcg7vdVJHMRoA5KngqS+q05PuMAQzFQBrpc.
   Please contact your system administrator.
-  Add correct host key in C:\\Users\\Pierr/.ssh/known_hosts to get rid of this message.
-  Offending ECDSA key in C:\\Users\\Pierr/.ssh/known_hosts:3
-  Host key for 192.168.0.204 has changed and you have requested strict checking.
+  Add correct host key in C:\\Users\\XXXX/.ssh/known_hosts to get rid of this message.
+  Offending ECDSA key in C:\\Users\\XXXX/.ssh/known_hosts:3
+  Host key for 192.168.7.2 has changed and you have requested strict checking.
   Host key verification failed.
+
   ```
   -> solution : `ssh-keygen -R 192.168.7.2` will solve this issue
 
@@ -155,9 +104,3 @@ On first boot, it might ask to generate keys. follow the instrucions on the term
 
 # What's next ? 
 - An easy installer for ArkOS for that system to replace EmuElec
-- An easy launch to bypass the need for uart ( use some kind of builtin way to launch a bash script ? the shortcut F1 is disabled, so it's a bummer...)
-- I need help from you guys because i currently do not have a lot of time to improve this project, but I hope this will help people control their game console !  
-
-
-  
-
