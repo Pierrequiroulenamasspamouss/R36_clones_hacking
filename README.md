@@ -6,23 +6,9 @@ Because I like to tinker, and thanks to the post of u/Careful-Ad3182 and u/Ill-I
 
 WARNING : this is not a tutorial for beginners. it is a proof of concept that having a ssh connection to your machine via OTG is possible.
 
-** I need someone to help me run the script directly via the homescreen , or with an easy modifications tool. (adding a new system called homebrews is possible, to bypass the need for UART and just use the serial via UART once.
+ # UPDATE : 
+ I got a way to run the server from the homescreen, by putting my script into a newly created ports_scripts directory. Somehow the machine has all we need. Gonna update the tutorial to not require UART, now that this is possible. And also try to change the system files to use another game launcher like ArkOS Just put the files insite the tools folder from the zip file into a newly created "ports_scripts"  folder in your SD card and launch the script via the Ports selection. 
 
-What I need is a script to modify the file /storage/.emulationstation/es_systems.cfg and add the following lines inbetween the other systems : 
-```
-  <system>
-    <name>homebrews</name>
-    <fullname>Homebrews</fullname>
-    <path>/storage/roms/homebrews</path>
-    <extension>.sh .SH</extension>
-    <command>sh %ROM%</command>
-    <platform>homebrews</platform>
-    <theme>homebrews</theme>
-  </system>
-```
-like that you could run the server from the emuElec homescreen. 
-
-)**
 
 # Prerequisites
 - UART to USB interface. Any controller that can go up to 1 500 000 BAUD can do the job. I repurposed an old ESP32 from which I removed the chip and kept the interfacing chip ![like this one](https://www.waveshare.com/media/catalog/product/c/p/cp2102-usb-uart-board-type-a-1_1.jpg)
