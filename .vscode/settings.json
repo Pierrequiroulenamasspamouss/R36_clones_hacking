@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "font16x16.h": "c",
+        "stb_image.h": "c"
+    }
+}

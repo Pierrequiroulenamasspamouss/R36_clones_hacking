@@ -1,0 +1,8 @@
+aarch64-linux-gnu-gcc -o fbterm fbterm.c
+chmod +x fbterm
+
+cd /roms/ports_scripts/Display_adapter
+echo "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" | ./fbterm
+
+
+ssh root@192.168.7.2

@@ -16,12 +16,12 @@ WARNING : this is not a tutorial for beginners. it is a proof of concept that ha
 Download the latest release (for now EZ-installer.zip) and unzip it to the root of your SD card. There should be no overwrites. Put the sd back in the console
 
 # Launch the script
+We use the fact that the "Ports" system in ` /storage/.emulationstation/es_systems.cfg ` uses the shell terminal to execute the scripts.
 Open the "Ports" system. if there's nothing accessible there, go to the EmuElec settings and check the "see empty systems". That would be strange but not impossible. If you still see not script, there's a problem. If you do see the program, run it. you should be greeted with a black screen. Now you can connect the device to your computer with an USB cable, and you should hear the sound that a device has been connected. Note that it is registered as a "Network adapter" and not a usb device. 
 
 ```cmd
 netsh interface ip set address "Ethernet 2" static 192.168.7.2 255.255.255.0
 ```
-
 
 and then try to ping it
 (The script takes ~5-10s to load, so be a little patient before trying to ping the device.)
@@ -36,7 +36,9 @@ ssh root@192.168.7.2
 
 It will ask for a password. Mine was "emuelec" but if it doesn't work, you could just try a blank password. 
 
-On first boot, it might ask to generate keys. follow the instrucions on the terminal and BOOM, there you go. You now can browse the filesystem as you wish
+To exit the ssh server, I still haven't made an exit, so the simplest option is to reset the console ( reset button )
+
+There also is a "terminal" that lauches the on-screen terminal of the device (requires a keyboard attached to OTG port)
 
 # Issues you could have :
 - readonly file system
@@ -52,7 +54,7 @@ On first boot, it might ask to generate keys. follow the instrucions on the term
   tmpfs                   193.8M      2.1M    191.7M   1% /run
   /dev/mmcblk0p3         1023.7M   1009.4M     14.4M  99% /flash
   /dev/loop0              978.5M    978.5M         0 100% /
-  /dev/mmcblk0p5            4.5G    484.2M      4.0G  11% /storage
+  /dev/mmcblk0p5            4.5G    484.2M      4.0G  11% /storage 
   tmpfs                   484.5M         0    484.5M   0% /dev/shm
   tmpfs                     4.0M         0      4.0M   0% /sys/fs/cgroup
   tmpfs                   484.5M     32.0K    484.5M   0% /var
@@ -103,4 +105,6 @@ On first boot, it might ask to generate keys. follow the instrucions on the term
 
 
 # What's next ? 
+- a more presentable script (like displaying the ip on the console's display, not using a hardcoded IP, etc...) that only runs the server in the background, and lets the console usable while the server is running (i made a tool to display images on screen called fbterm, just adapt the ssh_over_usb script)
+-make the scripts less hard-coded with a config.conf file for the path of the adapter, etc... 
 - An easy installer for ArkOS for that system to replace EmuElec

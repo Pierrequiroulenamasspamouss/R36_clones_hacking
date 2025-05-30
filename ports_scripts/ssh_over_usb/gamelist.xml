@@ -1,0 +1,6 @@
+<game>
+    <path>./usb_over_ethernet.sh</path>
+    <name>USB Ethernet Gadget</name>
+    <desc>Start USB Ethernet SSH server</desc>
+    <image>./icons/ssh_icon.png</image> <!-- optional -->
+</game>

@@ -1,2 +1,4 @@
 disk_images/internal_backup.img.gz
 flash/
+/ports_scripts/Display_adapter/quick-commands.txt
+autozipper.sh
